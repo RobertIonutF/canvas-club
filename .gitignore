@@ -1,0 +1,13 @@
+.env*
+!.env.example
+node_modules/
+.next/
+.vercel/
+.frontend-craft/
+coverage/
+playwright-report/
+test-results/
+*.log
+.playwright-cli/
+output/
+*.tsbuildinfo
