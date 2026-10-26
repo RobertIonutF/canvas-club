@@ -4,7 +4,7 @@ A little space to draw, try an idea, and build a collection that feels yours.
 
 Canvas Club is an early web app for casual makers: a useful solo painting session first, with optional AI help, creative projects, and a community around finished work. Creative XP records participation; it is not an art-skill score, and buying AI generations does not buy levels.
 
-[Source repository](https://github.com/RobertIonutF/canvas-club) · [Build recipe](docs/BUILD.md) · [Operations](docs/OPERATIONS.md)
+[Open Canvas Club](https://canvas-club-studio.vercel.app) · [Source repository](https://github.com/RobertIonutF/canvas-club) · [Build recipe](docs/BUILD.md) · [Operations](docs/OPERATIONS.md)
 
 ## What you can do
 
@@ -65,7 +65,7 @@ AI quota is reserved before calling the provider. Failed, rejected or timed-out 
 
 ## Release status
 
-As of 26 October 2026, local interface checks and development-backend checks have been performed, including real image-generation requests. The final connected browser workflow and public production deployment are still under release review. Repository creation and a linked Vercel project do not establish a verified live site. See [BUILD.md](docs/BUILD.md) for the evidence boundary and [OPERATIONS.md](docs/OPERATIONS.md) for deployment and recovery.
+As of 26 October 2026, [Canvas Club is live](https://canvas-club-studio.vercel.app). The GitHub `main` branch is connected to Vercel project `canvas-club-studio`; the first Git-triggered deployment reached `READY` and the public origin returned HTTP 200 without authentication. The production browser journey passed signup, drawing, save/reload, one real AI edit recovered after reload and added as a separate layer, public sharing/conversation, and editable history restoration. The production backend passed 21 integration checks, four quota guards and five storage/calendar boundary checks. Desktop and mobile viewport checks passed; physical touch/stylus devices, screen-reader use, long sessions and a live backup-restore rehearsal remain untested. See [BUILD.md](docs/BUILD.md) for the separate evidence classes and [OPERATIONS.md](docs/OPERATIONS.md) for deployment and recovery.
 
 ## Credits and licensing
 

@@ -1,15 +1,16 @@
 # Operating Canvas Club
 
-Operator reference, checked against the current repository on 26 October 2026. These are instructions for authorized owners; no credential values belong in this document or command history. Public deployment verification is still pending at writing.
+Operator reference, checked against the current repository on 26 October 2026. These are instructions for authorized owners; no credential values belong in this document or command history. The initial Git-triggered production deployment reached `READY` and its public origin returned HTTP 200 without authentication. The bounded production browser journey passed signup, painting, saving/reopening, a real AI edit, sharing/conversation and history restoration; see the separate [verification record](BUILD.md#verification-and-release-boundary).
 
 ## Deployment map
 
-| Environment      | Backend / ownership                                                                               |
-| ---------------- | ------------------------------------------------------------------------------------------------- |
-| Development      | `formal-gopher-359` — `https://formal-gopher-359.eu-west-1.convex.cloud`                          |
-| Production       | `impartial-ptarmigan-173` — `https://impartial-ptarmigan-173.eu-west-1.convex.cloud`              |
-| Git source       | [RobertIonutF/canvas-club](https://github.com/RobertIonutF/canvas-club), production branch `main` |
-| Frontend project | Vercel `canvas-club-studio`, linked to that GitHub repository                                     |
+| Environment            | Backend / ownership                                                                               |
+| ---------------------- | ------------------------------------------------------------------------------------------------- |
+| Development            | `formal-gopher-359` — `https://formal-gopher-359.eu-west-1.convex.cloud`                          |
+| Production             | `impartial-ptarmigan-173` — `https://impartial-ptarmigan-173.eu-west-1.convex.cloud`              |
+| Git source             | [RobertIonutF/canvas-club](https://github.com/RobertIonutF/canvas-club), production branch `main` |
+| Frontend project       | Vercel `canvas-club-studio`, linked to that GitHub repository                                     |
+| Public frontend origin | [Canvas Club](https://canvas-club-studio.vercel.app), also configured as production `SITE_URL`    |
 
 Backend URLs and deployment names identify services; they are not secret credentials and do not establish a verified public frontend. Never substitute production for development to make a failing local test pass.
 
@@ -51,12 +52,15 @@ It is not a general-purpose installer for another user's project. Do not dump it
 `vercel.json` selects `npm ci` and `node scripts/vercel-build.mjs`.
 
 - On a production build, the helper requires `CONVEX_DEPLOY_KEY`, runs the pinned Convex CLI's production deploy with typechecking, then runs `npm run build`. Convex injects the production URL through `--cmd-url-env-var-name NEXT_PUBLIC_CONVEX_URL`.
+- After the coupled production build succeeds, the helper initializes/advances the backend calendar through `calendar:rollover`. The daily midnight-UTC cron then advances the single calendar row used by reactive prompt, weekly-progress and quota-display queries. Mutations still enforce the actual server date. A missing calendar is a setup failure, not a reason to change a user's clock.
 - On a nonproduction build, it runs only the Next.js build. It does not deploy backend code. Preview frontend variables must point to a deliberate nonproduction backend; do not grant previews the production deploy credential.
 - `npm run build` by itself builds Next.js; it does not publish a site or deploy the backend.
 
 Before merging/pushing an authorized production change, run typecheck, lint and build; inspect schema/auth/storage changes; verify that no ignored configuration or local QA artifacts are staged. Prefer backward-compatible backend changes because the backend deploy happens before the frontend build. A failed frontend build can leave newly deployed backend functions active.
 
 After deployment, verify the public origin and expected commit, then perform a bounded production smoke: signup/sign-in, private save/reopen, export, one controlled share/unshare and account recovery where appropriate. Make a model request only when authorized and within budget. Remove clearly identified test records through the bounded owner workflow; never delete records based only on a common display name. Record observed behavior and unrun cases. A green build or linked repository is insufficient live verification.
+
+For this release, the production backend has separately passed 21 integration checks, four quota guards and five storage/calendar boundary checks using bounded disposable accounts, with cleanup completed. Those checks made no provider calls. A separate production browser journey passed with exactly one paid image edit, preserved original layers, durable proposal recovery/acceptance, cloud save/reload, public sharing/conversation and history restoration. See the dated [verification record](BUILD.md#verification-and-release-boundary). A live backup-restore/rollback rehearsal has not been performed.
 
 ## AI budget, failures and provider access
 

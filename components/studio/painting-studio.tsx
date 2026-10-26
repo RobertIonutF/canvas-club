@@ -422,10 +422,10 @@ export const PaintingStudio = forwardRef<
     void initialize();
     // This ref is a monotonically increasing async-load generation, not a DOM
     // node. Increment its current value to invalidate every pending restoration.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     return () => {
       cancelled = true;
       mountedRef.current = false;
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       ++loadEpochRef.current;
     };
   }, [captureDocument, fitCanvas, restoreDocument]);
